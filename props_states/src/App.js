@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+
 import PropTypes from "prop-types";
 
 class App extends Component {
@@ -32,11 +31,24 @@ App.defaultProps = {
   }
 };
 class Parent extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      cars: ["s-BMW", "s-MERC", "s-City", "s-Audi"]
+    };
+    this.handleClcik = this.handleClcik.bind(this);
+  }
+  handleClcik() {
+    this.setState({
+      cars: this.state.cars.reverse()
+    });
+  }
   render() {
     return (
       <div>
-        <h2>Just some info</h2>
-        <Cars msg="cars are cool" model="3245" coolCars={this.props.cars} />
+        <h2 onClick={this.handleClcik}>Just some info</h2>
+        <Cars msg="cars are cool" model="3245" coolCars={this.state.cars} />
       </div>
     );
   }
@@ -53,9 +65,11 @@ class Cars extends Component {
         <p>{this.props.msg}</p>
         <p>{this.props.model}</p>
 
-        {this.props.coolCars.map((item, i) => {
-          return item + " ";
-        })}
+        <div>
+          {this.props.coolCars.map((item, i) => {
+            return <p key={i}>{item}</p>;
+          })}
+        </div>
       </div>
     );
   }
